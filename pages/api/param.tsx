@@ -12,62 +12,59 @@ export default function handler(req: NextRequest) {
     // ?title=<title>
     const hasTitle = searchParams.has('title')
     const title = hasTitle
-      ? searchParams.get('title')?.slice(0, 100)
+      ? searchParams.get('title')
       : 'My default title'
+
+    if (title.length > 200) throw new Error('the length is too long')
+
+    let textsizeClass = '';
+    if (title.length > 20*7) {
+      textsizeClass = 'text-4xl'
+    } else if (title.length > 14 * 7 ) {
+      textsizeClass = 'text-5xl'
+    } else if (title.length > 11 * 4 ) {
+      textsizeClass = 'text-6xl'
+    } else if (title.length > 9 * 2 ) {
+      textsizeClass = 'text-7xl'
+    } else {
+      textsizeClass = 'text-8xl'
+    }
+    
 
     return new ImageResponse(
       (
-        <div
-          style={{
-            backgroundColor: 'black',
-            backgroundSize: '150px 150px',
-            height: '100%',
-            width: '100%',
-            display: 'flex',
-            textAlign: 'center',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            flexWrap: 'nowrap',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              alignContent: 'center',
-              justifyContent: 'center',
-              justifyItems: 'center',
-            }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              alt="Vercel"
-              height={200}
-              src="data:image/svg+xml,%3Csvg width='116' height='100' fill='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M57.5 0L115 100H0L57.5 0z' /%3E%3C/svg%3E"
-              style={{ margin: '0 30px' }}
-              width={232}
-            />
-          </div>
-          <div
-            style={{
-              fontSize: 60,
-              fontStyle: 'normal',
-              letterSpacing: '-0.025em',
-              color: 'white',
-              marginTop: 30,
-              padding: '0 120px',
-              lineHeight: 1.4,
-              whiteSpace: 'pre-wrap',
-            }}
-          >
-            {title}
-          </div>
+<div
+  style={{
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    backgroundColor: 'white',
+    backgroundImage: 'radial-gradient(circle at 25px 25px, lightgray 2%, transparent 0%), radial-gradient(circle at 75px 75px, lightgray 2%, transparent 0%)',
+    backgroundSize: '100px 100px',
+  }}
+>
+  <div tw="flex flex-col w-full h-full items-center justify-center">
+    <div tw="flex w-full">
+      <div tw="flex flex-col md:flex-row w-full py-12 px-4 md:items-center justify-between p-8">
+        <div tw={`${textsizeClass} leading-relaxed`}>
+              {title}
         </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
       ),
       {
-        width: 1200,
-        height: 630,
+        width: 800,
+        height: 600,
       }
     )
   } catch (e: any) {
