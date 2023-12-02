@@ -20,7 +20,7 @@ export default function handler(req: NextRequest) {
     let textsizeClass = '';
     if (title.length > 20*6) {
       textsizeClass = 'text-4xl'
-    } else if (title.length > 14 * 7 ) {
+    } else if (title.length > 14 * 5 ) {
       textsizeClass = 'text-5xl'
     } else if (title.length > 11 * 4 ) {
       textsizeClass = 'text-6xl'
