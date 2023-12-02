@@ -18,7 +18,7 @@ export default function handler(req: NextRequest) {
     if (title.length > 200) throw new Error('the length is too long')
 
     let textsizeClass = '';
-    if (title.length > 20*7) {
+    if (title.length > 20*6) {
       textsizeClass = 'text-4xl'
     } else if (title.length > 14 * 7 ) {
       textsizeClass = 'text-5xl'
