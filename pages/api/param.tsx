@@ -13,7 +13,7 @@ export default function handler(req: NextRequest) {
     // ?title=<title>
     const hasTitle = searchParams.has('title')
     const title = hasTitle
-      ? searchParams.get('title')
+      ? searchParams.get('title')!
       : 'My default title'
 
     if (title.length > 200) throw new Error('the length is too long')
