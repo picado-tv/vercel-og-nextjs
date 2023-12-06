@@ -11,10 +11,9 @@ export default function handler(req: NextRequest) {
     const { searchParams } = new URL(req.url)
 
     // ?title=<title>
-    const hasTitle = searchParams.has('title')
-    const title = hasTitle
-      ? searchParams.get('title')!
-      : 'My default title'
+    const title = searchParams.get('title') || 'My default title'
+    // ?noruby=true
+    const isNoRuby = (searchParams.get('noruby') || 'false').toLowerCase?.() === 'true'
 
     if (title.length > 200) throw new Error('the length is too long')
 
@@ -58,7 +57,7 @@ export default function handler(req: NextRequest) {
                 return (<>
                   <span style={{ whiteSpace: 'pre' }}>{hanja.split(v).map((hSegment) => {
                     return (<>
-                      { !hanjaRegex.test(hSegment) ?
+                      { ( isNoRuby || !hanjaRegex.test(hSegment)) ?
                         (<span>{hSegment}</span>) :
                         (<ruby tw='flex max-w'>{hSegment}<rt tw='absolute text-xl w-full justify-center -mt-1'>{hanja.translate(hSegment, hanja.TRANSLATE_TYPES.SUBSTITUTION)}</rt></ruby>)
                       }
