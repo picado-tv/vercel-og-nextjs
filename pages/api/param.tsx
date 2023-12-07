@@ -18,13 +18,13 @@ export default function handler(req: NextRequest) {
     if (title.length > 200) throw new Error('the length is too long')
 
     let textsizeClass = '';
-    if (title.length > 20*6) {
+    if (title.length > 20*.8 * 6) {
       textsizeClass = 'text-4xl'
-    } else if (title.length > 14 * 5 ) {
+    } else if (title.length > 14*.8 * 5 ) {
       textsizeClass = 'text-5xl'
-    } else if (title.length > 11 * 4 ) {
+    } else if (title.length > 11*.8 * 4 ) {
       textsizeClass = 'text-6xl'
-    } else if (title.length > 9 * 2 ) {
+    } else if (title.length > 9*.8 * 2 ) {
       textsizeClass = 'text-7xl'
     } else {
       textsizeClass = 'text-8xl'
@@ -59,7 +59,7 @@ export default function handler(req: NextRequest) {
                     return (<>
                       { ( isNoRuby || !hanjaRegex.test(hSegment)) ?
                         (<span>{hSegment}</span>) :
-                        (<ruby tw='flex max-w'>{hSegment}<rt tw='absolute text-xl w-full justify-center -mt-1'>{hanja.translate(hSegment, hanja.TRANSLATE_TYPES.SUBSTITUTION)}</rt></ruby>)
+                        (<ruby tw='flex max-w'>{hSegment}<rt tw='absolute text-xl w-full justify-center -mt-2'>{hanja.translate(hSegment, hanja.TRANSLATE_TYPES.SUBSTITUTION)}</rt></ruby>)
                       }
                     </>);
                   })} </span>
