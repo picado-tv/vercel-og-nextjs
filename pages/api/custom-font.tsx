@@ -5,11 +5,12 @@ export const config = {
   runtime: 'edge',
 }
 
-const tcfont = fetch(new URL('../../assets/NotoSerifTC-Regular.otf', import.meta.url)).then(
+// The URL was from https://developers.google.com/fonts/docs/developer_api?hl=ko
+const tcfont = fetch(new URL('http://fonts.gstatic.com/s/notoseriftc/v23/XLYgIZb5bJNDGYxLBibeHZ0BhnEESXFtUsM.otf')).then(
   (res) => res.arrayBuffer()
 )
 
-const scfont = fetch(new URL('../../assets/NotoSerifSC-Regular.otf', import.meta.url)).then(
+const scfont = fetch(new URL('http://fonts.gstatic.com/s/notoserifsc/v22/H4chBXePl9DZ0Xe7gG9cyOj7oqCcbzhqDtg.otf')).then(
   (res) => res.arrayBuffer()
 )
 
@@ -27,7 +28,6 @@ export default async function handler(req: NextRequest) {
           height: '100%',
           width: '100%',
           fontSize: 100,
-          paddingTop: 30,
           fontFamily: 'Noto Serif TC, Noto Serif SC',
           flexDirection: 'column',
           justifyContent: 'center',
