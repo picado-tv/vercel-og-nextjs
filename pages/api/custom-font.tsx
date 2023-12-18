@@ -1,15 +1,23 @@
 import { ImageResponse } from '@vercel/og'
+import { NextRequest } from 'next/server'
 
 export const config = {
   runtime: 'edge',
 }
 
-const font = fetch(new URL('../../assets/TYPEWR__.TTF', import.meta.url)).then(
+const tcfont = fetch(new URL('../../assets/NotoSerifTC-Regular.otf', import.meta.url)).then(
   (res) => res.arrayBuffer()
 )
 
-export default async function handler() {
-  const fontData = await font
+const scfont = fetch(new URL('../../assets/NotoSerifSC-Regular.otf', import.meta.url)).then(
+  (res) => res.arrayBuffer()
+)
+
+export default async function handler(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
+  const hanzi = searchParams.get('hanzi') || '我'
+
+  const [scfontData, tcfontData] = await Promise.all([scfont, tcfont])
 
   return new ImageResponse(
     (
@@ -19,21 +27,29 @@ export default async function handler() {
           height: '100%',
           width: '100%',
           fontSize: 100,
-          fontFamily: 'Typewriter',
-          paddingTop: '100px',
-          paddingLeft: '50px',
+          paddingTop: 30,
+          fontFamily: 'Noto Serif TC, Noto Serif SC',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          display: 'flex',
         }}
       >
-        Hello world!
+        {hanzi}
       </div>
     ),
     {
-      width: 1200,
-      height: 630,
+      width: 128,
+      height: 128,
       fonts: [
         {
-          name: 'Typewriter',
-          data: fontData,
+          name: 'Noto Serif TC',
+          data: tcfontData,
+          style: 'normal',
+        },
+        {
+          name: 'Noto Serif SC',
+          data: scfontData,
           style: 'normal',
         },
       ],
